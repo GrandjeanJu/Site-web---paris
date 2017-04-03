@@ -48,7 +48,8 @@
                 die('Erreur : '.$e->getMessage());
         }
         // Récupération des messages
-        $reponse = $bdd->query('SELECT resultat, id, commentaire, sport, côte_W, côte_L, mise, DATE_FORMAT(date_ajout, "%d/%m/%Y") AS date_addi FROM historique WHERE pseudo='.$_SESSION['id'].' ORDER BY ID');
+        $sessid=$_SESSION['id'];
+        $reponse = $bdd->query('SELECT resultat, id, commentaire, sport, côte_W, côte_L, mise, DATE_FORMAT(date_ajout, "%d/%m/%Y") AS date_addi FROM historique WHERE pseudo='.$sessid.' ORDER BY ID DESC');
     ?>
         <table>
         <thead> <!-- En-tête du tableau -->

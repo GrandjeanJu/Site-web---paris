@@ -20,7 +20,7 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
         $reqpseudo = $bdd->prepare("SELECT * FROM espace_membre WHERE pseudo = ?");
         $reqpseudo->execute(array($_POST['newpseudo']));
         $pseudoexist = $reqpseudo->rowCount();
-        if($pseudoexist == 0) 
+        if($pseudoexist == 0)
         {
             $newpseudo = htmlspecialchars($_POST['newpseudo']);
             $insertpseudo = $bdd->prepare("UPDATE espace_membre SET pseudo = ? WHERE id = ?");

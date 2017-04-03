@@ -59,6 +59,13 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
 	    $insertresultat->execute(array($newresultat, $getid));
 	    header('location: historique.php');
 	}
+    if(isset($_POST['supprimer']) AND !empty($_POST['supprimer']) AND isset($_GET['id']) AND $_GET['id'] > 0)
+    {
+        $getid = $_GET['id']; // ici on reprend l'id du pari transmit pas l'action de form juste en bas, ainsi on peu identifier et le modifier le bon paris.
+        $insertsupprimer = $bdd->prepare("DELETE FROM historique WHERE id = ?");
+        $insertsupprimer->execute(array($getid));
+        header('location: historique.php');
+    }
 ?>
 <html>
     <head>
@@ -122,6 +129,8 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
 		        <td>
                 <input type="submit" value="Mettre à jour ce paris !">
                 </td>
+                <br/>
+                <button type="submit" name="supprimer" value="supprimer">Supprimer</button>
             </form>
         </tr> 
         </tbody>
