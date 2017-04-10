@@ -88,6 +88,11 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
     }
     </style>
         <body>
+	        <nav>
+			    <ul>
+			    <?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Retour </a>' ?>
+			    </ul>
+			</nav>
             <h2>Edition de mon profil</h2>
             <form method="POST" action="">
                 <label>Pseudo :</label>

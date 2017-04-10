@@ -61,22 +61,33 @@ if(isset($_POST['forminscription'])) {
     }
     </style>
     <body>
-    
-    <form action="inscription.php" method="post">
-        <p>
-        <label for="pseudo">Pseudo</label> : <input type="text" name="pseudo" id="pseudo" /><br />
-        <label for="pass">Mot de passe</label> :  <input type="password" name="pass" id="pass" /><br />
-        <label for="repass">Re Mot de passe</label> :  <input type="password" name="repass" id="repass" /><br />
-        <label for="email">Email</label> :  <input type="email" name="email" id="email" /><br />
 
-        <input type="submit" value="Envoyer" name="forminscription"/>
-        </p>
-    </form>
-<?php
-    if(isset($erreur)) 
-    {
-        echo '<font color="red">'.$erreur."</font>";
-    }
-?>
-</body>
+    	<nav>
+		    <ul>
+		        <a href="inscription.php">Inscription</a>
+		        <a href="connexion.php">Connexion</a>
+		        <a href="comment_parier.php">Comment parier ?</a>
+		    </ul>
+		</nav>
+
+		<section>
+		    <form action="inscription.php" method="post">
+		        <p>
+		        <label for="pseudo">Pseudo</label> : <input type="text" name="pseudo" id="pseudo" /><br />
+		        <label for="pass">Mot de passe</label> :  <input type="password" name="pass" id="pass" /><br />
+		        <label for="repass">Re Mot de passe</label> :  <input type="password" name="repass" id="repass" /><br />
+		        <label for="email">Email</label> :  <input type="email" name="email" id="email" /><br />
+
+		        <input type="submit" value="Envoyer" name="forminscription"/>
+		        </p>
+		    </form>
+			<?php
+			    if(isset($erreur)) 
+			    {
+			        echo '<font color="red">'.$erreur."</font>";
+			    }
+			?>
+		</section>
+
+	</body>
 </html>

@@ -43,29 +43,38 @@ if(isset($_POST['formconnexion'])) {
         <meta charset="utf-8" />
         <title>Mini-chat</title>
     </head>
-    <style>
-    form
-    {
-        text-align:center;
-    }
-    </style>
-    <body>
-    
-    <form action="connexion.php" method="post">
-        <p>
-        <label for="pseudo">Pseudo</label> : <input type="text" name="pseudoconnect" /><br />
-        <label for="pass">Mot de passe</label> :  <input type="password" name="passconnect" /><br />
+	<style>
+	    form
+	    {
+	        text-align:center;
+	    }
+	</style>
+	<body>
+	    <nav>
+	        <ul>
+	            <a href="inscription.php">Inscription</a>
+		        <a href="connexion.php">Connexion</a>
+	            <a href="comment_parier.php">Comment parier ?</a>
+	        </ul>
+	    </nav>
 
-        <input type="submit" value="Envoyer" name="formconnexion"/>
-        <br />
-        Cliquez <a href="inscription.php">ici</a>, si vous n'avez pas encore de compte !
-        </p>
-    </form>
-<?php
-    if(isset($erreur)) 
-    {
-        echo '<font color="red">'.$erreur."</font>";
-    }
-?>
-</body>
+	    <section>
+	        <form action="connexion.php" method="post">
+			    <p>
+			    <label for="pseudo">Pseudo</label> : <input type="text" name="pseudoconnect" /><br />
+			    <label for="pass">Mot de passe</label> :  <input type="password" name="passconnect" /><br />
+
+			    <input type="submit" value="Envoyer" name="formconnexion"/>
+			    <br />
+			    Cliquez <a href="inscription.php">ici</a>, si vous n'avez pas encore de compte !
+			    </p>
+	    	</form>
+			<?php
+				if(isset($erreur)) 
+				{
+				    echo '<font color="red">'.$erreur."</font>";
+			    }
+			?>
+		</section>
+	</body>
 </html>

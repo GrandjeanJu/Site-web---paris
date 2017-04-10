@@ -9,127 +9,145 @@
         <link rel="stylesheet" href="Style.css" />
         <title>Mini-chat</title>
     </head>
-    <style>
-    form
-    {
-        text-align:center;
-    }
-    </style>
     <body>
-     
-    <form action="historique_post.php" method="post">
-    <p>
-        <label for="sport">Sport</label> : <input type="text" name="sport"/><br />
- 
-        <label for="mise">Mise</label> :  <input type="text" name="mise"/><br />
- 
-        <label for="côte_W">Côte winner (celui que vous esperez voir <strong>gagner</strong>)</label> :  <input type="text" name="côte_W"/><br />
- 
-        <label for="côte_L">Côte loser (celui que vous esperez voir <strong>perdre</strong>)</label> :  <input type="text" name="côte_L"/><br />
- 
-        <label for="commentaire">Commentaire :</label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !"  size="100" maxlength="255" type="text" name="commentaire"/><br />
-         
-        <label for="gagné">Gagné ?</label>
-        <select name="gagné">
-           <option value="??">Je ne sais pas encore !</option>
-           <option value="oui">oui</option>
-           <option value="non">non</option>
-       </select>
- 
-        <input type="submit" value="Envoyer" />
-    </p>
-    </form>
+	    <header>
+		    <h2>Profil de <?php echo $_SESSION['pseudo']?></h2>
+		    ID = <?php echo $_SESSION['id']?>
+		    eMail = <?php echo $_SESSION['email']?>
+		</header>
+
+    	<nav>
+		    <ul>
+		        <a href="inscription.php">Inscription</a>
+		        <a href="connexion.php">Connexion</a>
+				<a href="deconnexion.php">Deconnexion</a>
+		        <a href="comment_parier.php">Comment parier ?</a>
+		        <?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?>
+
+				<a href="historique.php">Mon historique</a>
+		    </ul>
+		</nav>
+
+	    <section>
+		    <form action="historique_post.php" method="post">
+		    <p>
+		        <label for="sport">Sport</label> : <input type="text" name="sport"/><br />
+		        <label for="mise">Mise</label> :  <input type="text" name="mise"/><br />		 
+		        <label for="côte_W">Côte winner (celui que vous esperez voir <strong>gagner</strong>)</label> :  <input type="text" name="côte_W"/><br />		 
+		        <label for="côte_L">Côte loser (celui que vous esperez voir <strong>perdre</strong>)</label> :  <input type="text" name="côte_L"/><br />		 
+		        <label for="commentaire">Commentaire :</label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !"  size="100" maxlength="255" type="text" name="commentaire"/><br />
+		         
+		        <label for="gagné">Gagné ?</label>
+		        <select name="gagné">
+		           <option value="??">Je ne sais pas encore !</option>
+		           <option value="oui">oui</option>
+		           <option value="non">non</option>
+		        </select>
+		 
+		        <input type="submit" value="Envoyer" />
+		    </p>
+		    </form>
+	    </section>
+
 
 
 <!-- AFFICHAGE TABLEAU -->
 
 
-    <?php
-        // Connexion à la base de données
-        try
-        {
-            $bdd = new PDO('mysql:host=localhost;dbname=site_paris;charset=utf8', 'root', 'root');
-        }
-        catch(Exception $e)
-        {
-                die('Erreur : '.$e->getMessage());
-        }
-        // Récupération des messages
-        $sessid=$_SESSION['id']; // sert à query ci dessous mais aussi pour un query plus loin
-        $reponse = $bdd->query('SELECT resultat, id, commentaire, sport, côte_W, côte_L, mise, DATE_FORMAT(date_ajout, "%d/%m/%Y") AS date_addi FROM historique WHERE pseudo='.$sessid.' ORDER BY ID DESC');
-    ?>
-        <table>
-        <thead> <!-- En-tête du tableau -->
-            <tr>
-                <th>Date</th>
-                <th>Sport</th>
-                <th>Mise</th>
-                <th>Côte W</th>
-                <th>Côte L</th>
-                <th>Commentaire</th>
-                <th>Gagné ?</th>
-                <th>Perte ou Gain </th>
-             </tr>
-        </thead>
-<?php
-        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
-        while ($donnees = $reponse->fetch())
-        { //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte
-          if (htmlspecialchars($donnees['resultat'])=="oui") 
-          {
-              $gain_perte=htmlspecialchars($donnees['côte_W'])*htmlspecialchars($donnees['mise']);
-          }
-          elseif (htmlspecialchars($donnees['resultat'])=="non") 
-          {
-              $gain_perte=-htmlspecialchars($donnees['mise']);
-          }
-          else
-          {
-              $gain_perte="En attente";
-          }
-          $insertgain_perte = $bdd->prepare("UPDATE historique SET gain_perte = ? WHERE id = ?");
-          $insertgain_perte->execute(array($gain_perte,$donnees['id']));
-
-        //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte_chiffre (la diff par rapport a au dessus c'est qu'on remplace en attente par 0 pour ensuite pouvoir calculer la somme total des gain ou des perte)
-          if (htmlspecialchars($donnees['resultat'])=="oui") 
-          {
-              $gain_perte_chiffre=htmlspecialchars($donnees['côte_W'])*htmlspecialchars($donnees['mise']);
-          }
-          elseif (htmlspecialchars($donnees['resultat'])=="non") 
-          {
-              $gain_perte_chiffre=-htmlspecialchars($donnees['mise']);
-          }
-          else
-          {
-              $gain_perte_chiffre=0;
-          }
-          $insertgain_perte_chiffre = $bdd->prepare("UPDATE historique SET gain_perte_chiffre = ? WHERE id = ?");
-          $insertgain_perte_chiffre->execute(array($gain_perte_chiffre,$donnees['id']));
-
-          echo
-          '<tbody>
-           <tr>
-           <td>' .$donnees['date_addi']. '</td>
-           <td>' . htmlspecialchars($donnees['sport']) . '</td>
-           <td>' . htmlspecialchars($donnees['mise']) . '</td>
-           <td>' . htmlspecialchars($donnees['côte_W']) . '</td>
-           <td>' . htmlspecialchars($donnees['côte_L']) . '</td>
-           <td>' . htmlspecialchars($donnees['commentaire']) . '</td>
-           <td>' . htmlspecialchars($donnees['resultat']) . '</td>
-           <td>' . $gain_perte . '</td>
-           <td> <a href="modif_pari.php?id='.$donnees['id'].'">Modifier</a> </td>
-           </tr>
-          </tbody>';
-        }
-        $reponse->closeCursor();
-?>
-    	   <tr> <td colspan="8"> 
-         <?php
-              $reponse=$bdd->query('SELECT SUM(gain_perte_chiffre) AS gain_perte_total FROM historique WHERE pseudo='.$sessid.'');
-              $userinfo = $reponse->fetch();
-              echo $userinfo['gain_perte_total'];
-    	   ?> 
-    	   </td> </tr>
-      </table>
+		<section>
+		    <?php
+		        // Connexion à la base de données
+		        try
+		        {
+		            $bdd = new PDO('mysql:host=localhost;dbname=site_paris;charset=utf8', 'root', 'root');
+		        }
+		        catch(Exception $e)
+		        {
+		                die('Erreur : '.$e->getMessage());
+		        }
+		        // Récupération des messages
+		        $sessid=$_SESSION['id']; // sert à query ci dessous mais aussi pour un query plus loin
+		        $reponse = $bdd->query('SELECT resultat, id, commentaire, sport, côte_W, côte_L, mise, DATE_FORMAT(date_ajout, "%d/%m/%Y") AS date_addi FROM historique WHERE pseudo='.$sessid.' ORDER BY ID DESC');
+		    ?>
+		        <table>
+		        <thead> <!-- En-tête du tableau -->
+		            <tr>
+		                <th>Date</th>
+		                <th>Sport</th>
+		                <th>Mise</th>
+		                <th>Côte W</th>
+		                <th>Côte L</th>
+		                <th>Commentaire</th>
+		                <th>Gagné ?</th>
+		                <th>Perte ou Gain </th>
+		             </tr>
+		        </thead>
+			<?php
+		        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
+		        while ($donnees = $reponse->fetch())
+		        { //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte
+		        	if(htmlspecialchars($donnees['resultat'])=="oui") 
+		        	{
+		          		$gain_perte=(htmlspecialchars($donnees['côte_W'])*htmlspecialchars($donnees['mise']))-htmlspecialchars($donnees['mise']);
+		        	}
+		        	elseif (htmlspecialchars($donnees['resultat'])=="non") 
+		        	{
+		          		$gain_perte=-htmlspecialchars($donnees['mise']);
+		        	}
+		        	else
+		        	{
+		            	$gain_perte="En attente";
+		        	} 
+		        	$insertgain_perte = $bdd->prepare("UPDATE historique SET gain_perte = ? WHERE id = ?");
+		        	$insertgain_perte->execute(array($gain_perte,$donnees['id']));
+		        //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte_chiffre (la diff par rapport a au dessus c'est qu'on remplace en attente par 0 pour ensuite pouvoir calculer la somme total des gain ou des perte)
+		        	if (htmlspecialchars($donnees['resultat'])=="oui") 
+		        	{
+		            	$gain_perte_chiffre=(htmlspecialchars($donnees['côte_W'])*htmlspecialchars($donnees['mise']))-htmlspecialchars($donnees['mise']);
+		        	}
+		        	elseif (htmlspecialchars($donnees['resultat'])=="non") 
+		        	{
+		            	$gain_perte_chiffre=-htmlspecialchars($donnees['mise']);
+		        	}
+		        	else
+		        	{
+		            	$gain_perte_chiffre=0;
+		        	}
+		        	$insertgain_perte_chiffre = $bdd->prepare("UPDATE historique SET gain_perte_chiffre = ? WHERE id = ?");
+		        	$insertgain_perte_chiffre->execute(array($gain_perte_chiffre,$donnees['id']));
+		        	echo
+		        	'<tbody>
+		         	<tr>
+		         	<td>' .$donnees['date_addi']. '</td>
+		         	<td>' . htmlspecialchars($donnees['sport']) . '</td>
+		          	<td>' . htmlspecialchars($donnees['mise']) . '</td>
+		           	<td>' . htmlspecialchars($donnees['côte_W']) . '</td>
+		           	<td>' . htmlspecialchars($donnees['côte_L']) . '</td>
+		           	<td>' . htmlspecialchars($donnees['commentaire']) . '</td>
+		           	<td>' . htmlspecialchars($donnees['resultat']) . '</td>
+		           	<td>' . $gain_perte . '</td>
+		           	<td> <a href="modif_pari.php?id='.$donnees['id'].'">Modifier</a> </td>
+		           	</tr>
+		          	</tbody>'
+		          	;
+		        }
+		        $reponse->closeCursor();
+			?>
+		    		<tr> <td colspan="8"> 
+		        <?php
+		            $reponse=$bdd->query('SELECT SUM(gain_perte_chiffre) AS gain_perte_total FROM historique WHERE pseudo='.$sessid.'');
+		            $userinfo = $reponse->fetch();
+		        if(isset($userinfo['gain_perte_total']))
+		        {
+		            echo 'Recette totale = '. $userinfo['gain_perte_total'];
+		        }
+		        else
+		        {
+		            echo 'Recette totale = 0'. $userinfo['gain_perte_total'];
+		        }	
+		    	?> 
+		    		</td> </tr>
+		      </table>
+		</section>
     </body>
 </html>

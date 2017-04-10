@@ -83,6 +83,11 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
     }
     </style>
     <body>
+    	<nav>
+		    <ul>
+		        <a href="historique.php">Retour à l'historique</a>
+		    </ul>
+		</nav>
             <h2>Edition de mon profil</h2>
 		    <table>
         <thead> <!-- En-tête du tableau -->
