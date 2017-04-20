@@ -90,7 +90,7 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
         <body>
 	        <nav>
 			    <ul>
-			    <?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Retour </a>' ?>
+			    <li><?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Retour </a>' ?></li>
 			    </ul>
 			</nav>
             <h2>Edition de mon profil</h2>

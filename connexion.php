@@ -41,6 +41,7 @@ if(isset($_POST['formconnexion'])) {
 <html>
     <head>
         <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
         <title>Mini-chat</title>
     </head>
 	<style>
@@ -52,9 +53,9 @@ if(isset($_POST['formconnexion'])) {
 	<body>
 	    <nav>
 	        <ul>
-	            <a href="inscription.php">Inscription</a>
-		        <a href="connexion.php">Connexion</a>
-	            <a href="comment_parier.php">Comment parier ?</a>
+	            <li><a href="inscription.php">Inscription</a></li>
+		        <li><a href="connexion.php">Connexion</a></li>
+	            <li><a href="comment_parier.php">Comment parier ?</a></li>
 	        </ul>
 	    </nav>
 

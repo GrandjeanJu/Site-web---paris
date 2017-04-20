@@ -8,3 +8,30 @@ td, th
 {
     border: 1px solid black;
 }
+/* Navigation */
+
+nav ul
+{
+    list-style-type: none;
+    display: flex;
+}
+
+nav li /*comprend la zone de texte de chaque puce mais pas le text en lui même. Avec nav li on ne peut donc pas mettre de couleur, talle etc... Il faut utiliser "nav a" comme ci-dessous*/
+{
+    margin-right: 15px; 
+}
+
+nav a
+{
+
+    font-size: 1.3em;
+    color: #181818;
+    padding-bottom: 3px;
+    text-decoration: none;
+}
+
+nav a:hover
+{
+    color: #760001;
+    border-bottom: 3px solid #760001;
+}

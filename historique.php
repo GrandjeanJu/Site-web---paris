@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="Style.css" />
+        <link rel="stylesheet" href="style.css" />
         <title>Mini-chat</title>
     </head>
     <body>
@@ -18,13 +18,12 @@
 
     	<nav>
 		    <ul>
-		        <a href="inscription.php">Inscription</a>
-		        <a href="connexion.php">Connexion</a>
-				<a href="deconnexion.php">Deconnexion</a>
-		        <a href="comment_parier.php">Comment parier ?</a>
-		        <?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?>
-
-				<a href="historique.php">Mon historique</a>
+		        <li><a href="inscription.php"> Inscription </a></li>
+		        <li><a href="connexion.php"> Connexion </a></li>
+				<li><a href="deconnexion.php"> Deconnexion </a></li>
+		        <li><a href="comment_parier.php"> Comment parier ? </a></li>
+		        <li><?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
+				<li><a href="historique.php"> Mon historique </a></li>
 		    </ul>
 		</nav>
 
@@ -54,9 +53,7 @@
 		                <th>Sport</th>
 		                <th>Mise</th>
 		                <th>Gain potentiel</th>
-		                <th>Commentaire</th>
 		                <th>Gagné ?</th>
-		                <th>Perte ou Gain </th>
 		             </tr>
 		        </thead>
 		        <tbody>
@@ -66,7 +63,6 @@
 					        <td><label for="sport"></label><input type="text" name="sport"/></td>
 					        <td><label for="mise"></label><input type="text" name="mise"/></td>	 
 					        <td><label for="gain_potentiel"></label><input type="text" name="gain_potentiel"/></td>
-					        <td><label for="commentaire"></label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !" name="commentaire"/></td >
 					        <td><label for="gagné"></label>
 					        <select name="gagné">
 					           <option value="??">Je ne sais pas encore</option>
@@ -76,58 +72,78 @@
 			 				</td>
 			 				<td></td>
 			        		<td><input type="submit" value="Envoyer"/></td>
-		    			</form>
 		             </tr>
-			<?php
-		        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
-		        while ($donnees = $reponse->fetch())
-		        { //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte
-		        	if(htmlspecialchars($donnees['resultat'])=="oui") 
-		        	{
-		          		$gain_perte=(htmlspecialchars($donnees['gain_potentiel']));
-		        	}
-		        	elseif (htmlspecialchars($donnees['resultat'])=="non")
-		        	{
-		          		$gain_perte=-htmlspecialchars($donnees['mise']);
-		        	}
-		        	else
-		        	{
-		            	$gain_perte="En attente";
-		        	} 
-		        	$insertgain_perte = $bdd->prepare("UPDATE historique SET gain_perte = ? WHERE id = ?");
-		        	$insertgain_perte->execute(array($gain_perte,$donnees['id']));
-		        //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte_chiffre (la diff par rapport a au dessus c'est qu'on remplace en attente par 0 pour ensuite pouvoir calculer la somme total des gain ou des perte)
-		        	if (htmlspecialchars($donnees['resultat'])=="oui")
-		        	{
-		            	$gain_perte_chiffre=(htmlspecialchars($donnees['gain_potentiel']));
-		        	}
-		        	elseif (htmlspecialchars($donnees['resultat'])=="non")
-		        	{
-		            	$gain_perte_chiffre=-htmlspecialchars($donnees['mise']);
-		        	}
-		        	else
-		        	{
-		            	$gain_perte_chiffre=0;
-		        	}
-		        	$insertgain_perte_chiffre = $bdd->prepare("UPDATE historique SET gain_perte_chiffre = ? WHERE id = ?");
-		        	$insertgain_perte_chiffre->execute(array($gain_perte_chiffre,$donnees['id']));
-		        	echo
-		        	'
-			        <tr>
-			         	<td>' .$donnees['date_addi']. '</td>
-			         	<td>' . htmlspecialchars($donnees['sport']) . '</td>
-			          	<td>' . htmlspecialchars($donnees['mise']) . '</td>
-			           	<td>' . htmlspecialchars($donnees['gain_potentiel']) . '</td>
-			           	<td>' . htmlspecialchars($donnees['commentaire']) . '</td>
-			           	<td>' . htmlspecialchars($donnees['resultat']) . '</td>
-			           	<td>' . $gain_perte . '</td>
-			           	<td> <a href="modif_pari.php?id='.$donnees['id'].'">Modifier</a> </td>
-		           	</tr>
-		          	</tbody>'
-		          	;
-		        }
-		        $reponse->closeCursor();
-			?>
+		             <tr>
+			             <td colspan="5"><label for="commentaire"></label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !" name="commentaire" size="150"  />
+			             </td >
+		             </tr>
+		             	</form>
+		        </tbody>
+		        </table>
+		        <br/>
+		        <table>
+		        <thead> <!-- En-tête du tableau -->
+		            <tr>
+		                <th>Date</th>
+		                <th>Sport</th>
+		                <th>Mise</th>
+		                <th>Gain potentiel</th>
+		                <th>Commentaire</th>
+		                <th>Gagné ?</th>
+		                <th>Perte ou Gain </th>
+		             </tr>
+		        </thead>
+		        <tbody>
+				<?php
+			        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
+			        while ($donnees = $reponse->fetch())
+			        { //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte
+			        	if(htmlspecialchars($donnees['resultat'])=="oui") 
+			        	{
+			          		$gain_perte=(htmlspecialchars($donnees['gain_potentiel']));
+			        	}
+			        	elseif (htmlspecialchars($donnees['resultat'])=="non")
+			        	{
+			          		$gain_perte=-htmlspecialchars($donnees['mise']);
+			        	}
+			        	else
+			        	{
+			            	$gain_perte="En attente";
+			        	} 
+			        	$insertgain_perte = $bdd->prepare("UPDATE historique SET gain_perte = ? WHERE id = ?");
+			        	$insertgain_perte->execute(array($gain_perte,$donnees['id']));
+			        //avec le if si dessous on calcul les gain ou perte et modif de la bdd pour gain_perte_chiffre (la diff par rapport a au dessus c'est qu'on remplace en attente par 0 pour ensuite pouvoir calculer la somme total des gain ou des perte)
+			        	if (htmlspecialchars($donnees['resultat'])=="oui")
+			        	{
+			            	$gain_perte_chiffre=(htmlspecialchars($donnees['gain_potentiel']));
+			        	}
+			        	elseif (htmlspecialchars($donnees['resultat'])=="non")
+			        	{
+			            	$gain_perte_chiffre=-htmlspecialchars($donnees['mise']);
+			        	}
+			        	else
+			        	{
+			            	$gain_perte_chiffre=0;
+			        	}
+			        	$insertgain_perte_chiffre = $bdd->prepare("UPDATE historique SET gain_perte_chiffre = ? WHERE id = ?");
+			        	$insertgain_perte_chiffre->execute(array($gain_perte_chiffre,$donnees['id']));
+			        	echo
+			        	'
+				        <tr>
+				         	<td>' .$donnees['date_addi']. '</td>
+				         	<td>' . htmlspecialchars($donnees['sport']) . '</td>
+				          	<td>' . htmlspecialchars($donnees['mise']) . '</td>
+				           	<td>' . htmlspecialchars($donnees['gain_potentiel']) . '</td>
+				           	<td>' . htmlspecialchars($donnees['commentaire']) . '</td>
+				           	<td>' . htmlspecialchars($donnees['resultat']) . '</td>
+				           	<td>' . $gain_perte . '</td>
+				           	<td> <a href="modif_pari.php?id='.$donnees['id'].'">Modifier</a> </td>
+			           	</tr>
+			          	</tbody>'
+			          	;
+			        }
+			        $reponse->closeCursor();
+				?>
 		    		<tr> 
 			    		<td colspan="8"> 
 					        <?php
