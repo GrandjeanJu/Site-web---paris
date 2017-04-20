@@ -66,7 +66,7 @@
 					        <td><label for="sport"></label><input type="text" name="sport"/></td>
 					        <td><label for="mise"></label><input type="text" name="mise"/></td>	 
 					        <td><label for="gain_potentiel"></label><input type="text" name="gain_potentiel"/></td>
-					        <td><label for="commentaire"></label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !"/></td>
+					        <td><label for="commentaire"></label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !" name="commentaire"/></td >
 					        <td><label for="gagné"></label>
 					        <select name="gagné">
 					           <option value="??">Je ne sais pas encore</option>
@@ -144,7 +144,8 @@
 					    	?> 
 			    		</td> 
 		    		</tr>
-		      </table>
+		    	</tbody>
+		      	</table>
 		</section>
     </body>
 </html>
