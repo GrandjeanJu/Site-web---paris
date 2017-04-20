@@ -11,8 +11,8 @@ catch(Exception $e)
 }
 
 // Insertion du message à l'aide d'une requête préparée
-$req = $bdd->prepare('INSERT INTO historique (date_ajout, sport, mise, côte_W, côte_L, resultat, pseudo, commentaire) VALUES(now(),?,?,?,?,?,?,?)');
-$req->execute(array($_POST['sport'], $_POST['mise'], $_POST['côte_W'], $_POST['côte_L'], $_POST['gagné'], $_SESSION['id'], $_POST['commentaire']));
+$req = $bdd->prepare('INSERT INTO historique (date_ajout, sport, mise, resultat, pseudo, commentaire, gain_potentiel) VALUES(now(),?,?,?,?,?,?)');
+$req->execute(array($_POST['sport'], $_POST['mise'], $_POST['gagné'], $_SESSION['id'], $_POST['commentaire'], $_POST['gain_potentiel']));
 
 // Redirection du visiteur vers la page du minichat
 header('Location: historique.php');
