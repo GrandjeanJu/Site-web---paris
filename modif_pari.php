@@ -72,17 +72,13 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
         <meta charset="utf-8" />
         <title>Mini-chat</title>
     </head>
-    <style>
-    h2
-    {
-        text-align:center;
-    }
-    form
-    {
-        text-align:left;
-    }
-    </style>
     <body>
+        <header>
+            <div>
+            <h1>PITAJA</h1>
+            <p>Votre site de gestion de paris</p>
+            </div>
+        </header>
     	<nav>
 		    <ul>
 		        <a href="historique.php">Retour à l'historique</a>

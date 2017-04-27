@@ -44,18 +44,19 @@ if(isset($_POST['formconnexion'])) {
         <link rel="stylesheet" href="style.css" />
         <title>Mini-chat</title>
     </head>
-	<style>
-	    form
-	    {
-	        text-align:center;
-	    }
-	</style>
 	<body>
+	    <header>
+	    	<div>
+			<h1>PITAJA</h1>
+			<p>Votre site de gestion de paris</p>
+			</div>
+		</header>
 	    <nav>
 	        <ul>
 	            <li><a href="inscription.php">Inscription</a></li>
 		        <li><a href="connexion.php">Connexion</a></li>
 	            <li><a href="comment_parier.php">Comment parier ?</a></li>
+				<li><a href="deconnexion.php"> Deconnexion </a></li>
 	        </ul>
 	    </nav>
 

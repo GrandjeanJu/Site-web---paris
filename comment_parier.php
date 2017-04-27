@@ -10,11 +10,18 @@
 if (!isset($_SESSION['id']))
 { 
 ?>
+	<header>
+		<div>
+		<h1>PITAJA</h1>
+		<p>Votre site de gestion de paris</p>
+		</div>
+	</header>
  	<nav>
 		<ul>
 		    <li><a href="inscription.php">Inscription</a></li>
 		    <li><a href="connexion.php">Connexion</a></li>
 		    <li><a href="comment_parier.php">Comment parier ?</a></li>
+		    <li><a href="deconnexion.php">Deconnexion</a></li>
 		</ul>
 	</nav>
 
@@ -25,9 +32,10 @@ else
 ?>
     <body>
 	    <header>
-		    <h2>Profil de <?php echo $_SESSION['pseudo']?></h2>
-		    ID = <?php echo $_SESSION['id']?>
-		    eMail = <?php echo $_SESSION['email']?>
+	    	<div>
+			<h1>PITAJA</h1>
+			<p>Votre site de gestion de paris</p>
+			</div>
 		</header>
 		
     	<nav>

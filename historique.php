@@ -10,12 +10,12 @@
         <title>Mini-chat</title>
     </head>
     <body>
-	    <header>
-		    <h2>Profil de <?php echo $_SESSION['pseudo']?></h2>
-		    ID = <?php echo $_SESSION['id']?>
-		    eMail = <?php echo $_SESSION['email']?>
+		<header>
+	    	<div>
+			<h1>PITAJA</h1>
+			<p>Votre site de gestion de paris</p>
+			</div>
 		</header>
-
     	<nav>
 		    <ul>
 		        <li><a href="inscription.php"> Inscription </a></li>
@@ -70,12 +70,11 @@
 					           <option value="non">non</option>
 					        </select>
 			 				</td>
-			 				<td></td>
-			        		<td><input type="submit" value="Envoyer"/></td>
 		             </tr>
 		             <tr>
-			             <td colspan="5"><label for="commentaire"></label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !" name="commentaire" size="150"  />
+			             <td colspan="4"><label for="commentaire"></label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !" name="commentaire" size="150"  />
 			             </td >
+			        	<td><input type="submit" value="Envoyer"/></td>
 		             </tr>
 		             	</form>
 		        </tbody>
