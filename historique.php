@@ -46,7 +46,7 @@
 		        $sessid=$_SESSION['id']; // sert à query ci dessous mais aussi pour un query plus loin
 		        $reponse = $bdd->query('SELECT resultat, id, commentaire, sport, gain_potentiel, mise, DATE_FORMAT(date_ajout, "%d/%m/%Y") AS date_addi FROM historique WHERE pseudo='.$sessid.' ORDER BY ID DESC');
 		    ?>
-		        <table>
+		        <table class="table-fill">
 		        <thead> <!-- En-tête du tableau -->
 		            <tr>
 		                <th>Date</th>
@@ -80,19 +80,19 @@
 		        </tbody>
 		        </table>
 		        <br/>
-		        <table>
+		        <table class="table-fill">
 		        <thead> <!-- En-tête du tableau -->
 		            <tr>
-		                <th>Date</th>
-		                <th>Sport</th>
-		                <th>Mise</th>
-		                <th>Gain potentiel</th>
-		                <th>Commentaire</th>
-		                <th>Gagné ?</th>
-		                <th>Perte ou Gain </th>
+		                <th class="text-left">Date</th>
+		                <th class="text-left">Sport</th>
+		                <th class="text-left">Mise</th>
+		                <th class="text-left">Gain potentiel</th>
+		                <th class="text-left">Commentaire</th>
+		                <th class="text-left">Gagné ?</th>
+		                <th class="text-left">Perte ou Gain </th>
 		             </tr>
 		        </thead>
-		        <tbody>
+		        <tbody class="table-hover">
 				<?php
 			        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
 			        while ($donnees = $reponse->fetch())
