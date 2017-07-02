@@ -16,20 +16,15 @@ session_start();
 			<p>Votre site de gestion de paris</p>
 			</div>
 		</header>
-
 		<nav>
 		    <ul>
-				<li><a href="inscription.php">Inscription</a></li>
-		        <li><a href="connexion.php">Connexion</a></li>
 		    	<li><a href="deconnexion.php">Deconnexion</a></li>
 		        <li><a href="comment_parier.php">Comment parier ?</a></li>
-		        <li><?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
+		        <li><?php echo '<a class="page_utilisee" href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
 				<li><a href="historique.php">Mon historique</a></li>
 		    </ul>
 		</nav>
-
 <?php
-session_start();
 // Connexion à la base de données
 try
 {
@@ -101,23 +96,28 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
         }
     }
 ?>
-		<section class="edition_profil">
-            <div>
-            <h2>Edition de mon profil</h2>
-            </div>
-            <div>
+		<section>
             <form method="POST" action="">
-                <label>Pseudo :</label>
-                <input type="text" name="newpseudo" placeholder="pseudo" value="<?php echo $user['pseudo']; ?>"> <br/> <br/>
-                <label>Votre mail :</label>
-                <input type="text" name="newemail" placeholder="email" value="<?php echo $user['email']; ?>"> <br/> <br/>
-                <label>Mot de passe :</label>
-                <input type="password" name="newpass" placeholder="pass"> <br/> <br/>
-                <label>Confirmation mot de passe :</label>
-                <input type="password" name="newrepass" placeholder="repass"> <br/> <br/>
-                <input type="submit" value="Mettre à jour mon profil !"> <br/> <br/>
+                <div>
+                <label>Pseudo</label> <br/>
+                <input type="text" name="newpseudo" placeholder="pseudo" value="<?php echo $user['pseudo']; ?>"><br/>
+                </div>
+                <div>
+                <label>Votre mail</label> <br/>
+                <input type="text" name="newemail" placeholder="email" value="<?php echo $user['email']; ?>"> <br/>
+                </div>
+                <div>
+                <label>Nouveau mot de passe</label> <br/>
+                <input type="password" name="newpass"> <br/>
+                </div>
+                <div>
+                <label>Confirmation du mot de passe</label> <br/>
+                <input type="password" name="newrepass"> <br/>
+                </div>
+                <div>
+                <input class="image_inscription_connexion" type="submit" value="Mettre à jour mon profil !">
+                </div>
             </form>
-            </div>
             <?php if(isset($msg)) {echo $msg;} ?>
 <?php
 }

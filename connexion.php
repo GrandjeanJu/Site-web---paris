@@ -51,22 +51,51 @@ if(isset($_POST['formconnexion'])) {
 			<p>Votre site de gestion de paris</p>
 			</div>
 		</header>
+	<?php
+	session_start();
+	if(isset($_SESSION['id']))
+	{
+	?>
+		<nav>
+		    <ul>
+		    	<li><a href="deconnexion.php">Deconnexion</a></li>
+		        <li><a href="comment_parier.php">Comment parier ?</a></li>
+		        <li><?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
+				<li><a href="historique.php">Mon historique</a></li>
+		    </ul>
+		</nav>
+
+	<?php
+	}
+	else
+	{
+	?>
 	    <nav>
 	        <ul>
+	        	<li><a href="index.php">Acceuil</a></li>
 	            <li><a href="inscription.php">Inscription</a></li>
-		        <li><a href="connexion.php">Connexion</a></li>
+	            <li><a class="page_utilisee" href="connexion.php">Connexion</a></li>
 	            <li><a href="comment_parier.php">Comment parier ?</a></li>
-				<li><a href="deconnexion.php"> Deconnexion </a></li>
 	        </ul>
 	    </nav>
+
+	<?php
+	}
+	?>
 
 	    <section>
 	        <form action="connexion.php" method="post">
 			    <p>
-			    <label for="pseudo">Pseudo</label> : <input type="text" name="pseudoconnect" /><br />
-			    <label for="pass">Mot de passe</label> :  <input type="password" name="passconnect" /><br />
+			    <div>
+			    <label for="pseudo">Pseudo</label> <br /> <input type="text" name="pseudoconnect" /><br />
+			    </div>
+			    <div>
+			    <label for="pass">Mot de passe</label> <br />  <input type="password" name="passconnect" /><br />
+			    </div>
 
-			    <input type="submit" value="Envoyer" name="formconnexion"/>
+			    <div>
+			    <input class="image_inscription_connexion" type="submit" value="Connexion" name="formconnexion"/>
+			    </div>
 			    <br />
 			    Cliquez <a href="inscription.php">ici</a>, si vous n'avez pas encore de compte !
 			    </p>

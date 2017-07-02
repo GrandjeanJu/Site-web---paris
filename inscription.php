@@ -63,24 +63,37 @@ if(isset($_POST['forminscription'])) {
             </div>
         </header>
 
-    	<nav>
-		    <ul>
-		        <li><a href="inscription.php">Inscription</a></li>
-		        <li><a href="connexion.php">Connexion</a></li>
-		        <li><a href="comment_parier.php">Comment parier ?</a></li>
-                <li><a href="deconnexion.php"> Deconnexion </a></li>
-		    </ul>
-		</nav>
+    <?php
+    session_start();
+    ?>
+        <nav>
+            <ul>
+                <li><a href="index.php">Acceuil</a></li>
+                <li><a class="page_utilisee" href="inscription.php">Inscription</a></li>
+                <li><a href="connexion.php">Connexion</a></li>
+                <li><a href="comment_parier.php">Comment parier ?</a></li>
+            </ul>
+        </nav>
 
 		<section>
 		    <form action="inscription.php" method="post">
 		        <p>
-		        <label for="pseudo">Pseudo</label> : <input type="text" name="pseudo" id="pseudo" /><br />
-		        <label for="pass">Mot de passe</label> :  <input type="password" name="pass" id="pass" /><br />
-		        <label for="repass">Re Mot de passe</label> :  <input type="password" name="repass" id="repass" /><br />
-		        <label for="email">Email</label> :  <input type="email" name="email" id="email" /><br />
+                <div>
+		        <label for="pseudo">Pseudo</label> <br /> <input type="text" name="pseudo" id="pseudo" /><br />
+                </div>
+                <div>
+		        <label for="pass">Mot de passe</label> <br /> <input type="password" name="pass" id="pass" /><br />
+                </div>
+                <div>
+		        <label for="repass">Re Mot de passe</label> <br />  <input type="password" name="repass" id="repass" /><br />
+                </div>
+                <div>
+		        <label for="email">Email</label> <br /> <input type="email" name="email" id="email" /><br />
+                </div>
 
-		        <input type="submit" value="Envoyer" name="forminscription"/>
+                <div>
+		        <input class="image_inscription_connexion" type="submit" value="Creer mon compte" name="forminscription"/>
+                </div>
 		        </p>
 		    </form>
 			<?php

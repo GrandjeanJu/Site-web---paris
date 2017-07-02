@@ -16,17 +16,14 @@
 			<p>Votre site de gestion de paris</p>
 			</div>
 		</header>
-    	<nav>
+		<nav>
 		    <ul>
-		        <li><a href="inscription.php"> Inscription </a></li>
-		        <li><a href="connexion.php"> Connexion </a></li>
-				<li><a href="deconnexion.php"> Deconnexion </a></li>
-		        <li><a href="comment_parier.php"> Comment parier ? </a></li>
+		    	<li><a href="deconnexion.php">Deconnexion</a></li>
+		        <li><a href="comment_parier.php">Comment parier ?</a></li>
 		        <li><?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
-				<li><a href="historique.php"> Mon historique </a></li>
+				<li><a class="page_utilisee" href="historique.php">Mon historique</a></li>
 		    </ul>
 		</nav>
-
 
 <!-- AFFICHAGE TABLEAU -->
 
@@ -90,6 +87,7 @@
 		                <th class="text-left">Commentaire</th>
 		                <th class="text-left">Gagné ?</th>
 		                <th class="text-left">Perte ou Gain </th>
+		                <th></th>
 		             </tr>
 		        </thead>
 		        <tbody class="table-hover">
@@ -138,7 +136,8 @@
 				           	<td>' . $gain_perte . '</td>
 				           	<td> <a href="modif_pari.php?id='.$donnees['id'].'">Modifier</a> </td>
 			           	</tr>
-			          	</tbody>'
+			          	</tbody>
+                        '
 			          	;
 			        }
 			        $reponse->closeCursor();

@@ -70,6 +70,7 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
 <html>
     <head>
         <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
         <title>Mini-chat</title>
     </head>
     <body>
@@ -84,8 +85,7 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
 		        <a href="historique.php">Retour à l'historique</a>
 		    </ul>
 		</nav>
-            <h2>Edition de mon profil</h2>
-		    <table>
+		    <table class="table-fill">
         <thead> <!-- En-tête du tableau -->
             <tr>
                 <th>Sport</th>
@@ -94,9 +94,10 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
                 <th>Côte L</th>
                 <th>Commentaire</th>
                 <th>Gagné ?</th>
+                <th></th>
             </tr>
         </thead>
-        <tbody> 
+        <tbody class="table-hover"> 
         <tr>
         	<form method="POST" action="modif_pari.php?id=<?php echo $_GET['id']/*ici on reprend l'id du pari (transmit par l'URL grâce à GET) pour l'envoyer juste au dessus pour la modification du bon pari  (la transmission initiale c'est faite par le script historique)*/ ?>"> 
                 <td>
