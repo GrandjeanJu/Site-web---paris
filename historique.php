@@ -1,7 +1,23 @@
 <!-- AFFICHAGE ENTREE DES DONNEES POUR CREER UN PARI (lié à historique_post) -->
+<?php
+	session_start();
+	// Connexion à la base de données
+	try
+	{
+		$bdd = new PDO('mysql:host=localhost;dbname=site_paris;charset=utf8', 'root', 'root');
+	}
+	catch(Exception $e)
+	{
+	        die('Erreur : '.$e->getMessage());
+	}
 
+	// Insertion du message à l'aide d'une requête préparée
+	$req = $bdd->prepare('INSERT INTO historique (date_ajout, sport, mise, resultat, pseudo, commentaire, gain_potentiel) VALUES(now(),?,?,?,?,?,?)');
+	$req->execute(array($_POST['sport'], $_POST['mise'], $_POST['gagné'], $_SESSION['id'], $_POST['commentaire'], $_POST['gain_potentiel']));
 
-<?php session_start(); ?>
+	// Redirection du visiteur vers la page du minichat
+	header('Location: historique.php');
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,7 +71,7 @@
 		        </thead>
 		        <tbody>
 		        	<tr>
-			        	<form action="historique_post.php" method="post">
+			        	<form action="historique.php" method="post">
 			       			<td><?php ?></td>
 					        <td><label for="sport"></label><input type="text" name="sport"/></td>
 					        <td><label for="mise"></label><input type="text" name="mise"/></td>	 
@@ -74,6 +90,7 @@
 			        	<td><input type="submit" value="Envoyer"/></td>
 		             </tr>
 		             	</form>
+
 		        </tbody>
 		        </table>
 		        <br/>
