@@ -7,8 +7,6 @@
 }
 /* LES TABLEAUX*/
 
-/* Pour le "modifier" du tableau il faudrait le transformer en "image de poubelle" pour supprimer, et "image de loupe pour regarder le pari et le modifier"*/
-
 /*Tableau de l'historique*/
 table
 {
@@ -64,6 +62,23 @@ td
   background: white;
 }
 
+/*PAGE MODIFICATION DE PARIS*/
+
+.bouton_poubelle
+{
+  background: none;
+  border: none;
+}
+
+.image_poubelle
+{
+
+}
+
+.bouton_recommencer
+{
+  background: image/recommencer.jpeg;
+}
 /* L'EN TÊTE*/
 header
 {

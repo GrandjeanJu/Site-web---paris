@@ -94,7 +94,6 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
                 <th>Côte L</th>
                 <th>Commentaire</th>
                 <th>Gagné ?</th>
-                <th></th>
             </tr>
         </thead>
         <tbody class="table-hover"> 
@@ -128,11 +127,8 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
 		           <option value="non">non</option>
 		        </select>
 		        </td>
-		        <td>
-                <input type="submit" value="Mettre à jour ce paris !">
-                </td>
-                <br/>
-                <button type="submit" name="supprimer" value="supprimer">Supprimer</button>
+                <input type="image" src="image/recommencer.jpeg" width="30" height="30">
+                <input type="image" src="image/poubelle.jpeg" width="30" height="30" name="supprimer" value="supprimer">
             </form>
         </tr> 
         </tbody>
