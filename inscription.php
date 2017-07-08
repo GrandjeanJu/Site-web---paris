@@ -76,22 +76,22 @@ if(isset($_POST['forminscription'])) {
         </nav>
 
 		<section>
-		    <form action="inscription.php" method="post">
-		        <p>
-                <div>
-		        <label for="pseudo">Pseudo</label> <br /> <input type="text" name="pseudo" id="pseudo" /><br />
+		    <form class="form_1_form" action="inscription.php" method="post">
+		        <p class="form_1_p">
+                <div class="form_1_div">
+		        <label class="form_1_label" for="pseudo">Pseudo</label> <br /> <input class="form_1_input" type="text" name="pseudo" id="pseudo" /><br />
                 </div>
-                <div>
-		        <label for="pass">Mot de passe</label> <br /> <input type="password" name="pass" id="pass" /><br />
+                <div class="form_1_div">
+		        <label class="form_1_label" for="pass">Mot de passe</label> <br /> <input class="form_1_input" type="password" name="pass" id="pass" /><br />
                 </div>
-                <div>
-		        <label for="repass">Re Mot de passe</label> <br />  <input type="password" name="repass" id="repass" /><br />
+                <div class="form_1_div">
+		        <label class="form_1_label" for="repass">Re Mot de passe</label> <br />  <input class="form_1_input" type="password" name="repass" id="repass" /><br />
                 </div>
-                <div>
-		        <label for="email">Email</label> <br /> <input type="email" name="email" id="email" /><br />
+                <div class="form_1_div">
+		        <label for="email" class="form_1_label">Email</label> <br /> <input class="form_1_input" type="email" name="email" id="email" /><br />
                 </div>
 
-                <div>
+                <div class="form_1_div">
 		        <input class="image_inscription_connexion" type="submit" value="Creer mon compte" name="forminscription"/>
                 </div>
 		        </p>

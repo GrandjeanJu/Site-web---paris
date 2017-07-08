@@ -19,10 +19,10 @@
 	?>
 		<nav>
 		    <ul>
-		    	<li><a href="deconnexion.php">Deconnexion</a></li>
 		        <li><a class="page_utilisee" href="comment_parier.php">Comment parier ?</a></li>
 		        <li><?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
 				<li><a href="historique.php">Mon historique</a></li>
+		    	<li><a href="deconnexion.php">Déconnexion</a></li>
 		    </ul>
 		</nav>
 

@@ -18,10 +18,10 @@ session_start();
 		</header>
 		<nav>
 		    <ul>
-		    	<li><a href="deconnexion.php">Deconnexion</a></li>
 		        <li><a href="comment_parier.php">Comment parier ?</a></li>
 		        <li><?php echo '<a class="page_utilisee" href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
 				<li><a href="historique.php">Mon historique</a></li>
+                <li><a href="deconnexion.php">Déconnexion</a></li>
 		    </ul>
 		</nav>
 <?php
@@ -97,25 +97,25 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
     }
 ?>
 		<section>
-            <form method="POST" action="">
-                <div>
-                <label>Pseudo</label> <br/>
-                <input type="text" name="newpseudo" placeholder="pseudo" value="<?php echo $user['pseudo']; ?>"><br/>
+            <form class="form_1_form" method="POST" action="">
+                <div class="form_1_div">
+                    <label class="form_1_label">Pseudo</label> <br/>
+                    <input class="form_1_input" type="text" name="newpseudo" placeholder="pseudo" value="<?php echo $user['pseudo']; ?>"><br/>
                 </div>
-                <div>
-                <label>Votre mail</label> <br/>
-                <input type="text" name="newemail" placeholder="email" value="<?php echo $user['email']; ?>"> <br/>
+                <div class="form_1_div">
+                    <label class="form_1_label">Votre mail</label> <br/>
+                    <input class="form_1_input" type="text" name="newemail" placeholder="email" value="<?php echo $user['email']; ?>"> <br/>
                 </div>
-                <div>
-                <label>Nouveau mot de passe</label> <br/>
-                <input type="password" name="newpass"> <br/>
+                <div class="form_1_div">
+                    <label class="form_1_label">Nouveau mot de passe</label> <br/>
+                    <input class="form_1_input" type="password" name="newpass"> <br/>
                 </div>
-                <div>
-                <label>Confirmation du mot de passe</label> <br/>
-                <input type="password" name="newrepass"> <br/>
+                <div class="form_1_div">
+                    <label class="form_1_label">Confirmation du mot de passe</label> <br/>
+                    <input class="form_1_input" type="password" name="newrepass"> <br/>
                 </div>
-                <div>
-                <input class="image_inscription_connexion" type="submit" value="Mettre à jour mon profil !">
+                <div class="form_1_div">
+                    <input class="image_inscription_connexion" type="submit" value="Mettre à jour mon profil !">
                 </div>
             </form>
             <?php if(isset($msg)) {echo $msg;} ?>

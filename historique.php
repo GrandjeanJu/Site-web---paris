@@ -1,4 +1,4 @@
-<!-- AFFICHAGE ENTREE DES DONNEES POUR CREER UN PARI (lié à historique_post) -->
+<!-- AFFICHAGE ENTREE DES DONNEES POUR CREER UN PARI -->
 <?php
 	session_start();
 	// Connexion à la base de données
@@ -34,10 +34,10 @@
 		</header>
 		<nav>
 		    <ul>
-		    	<li><a href="deconnexion.php">Deconnexion</a></li>
 		        <li><a href="comment_parier.php">Comment parier ?</a></li>
 		        <li><?php echo '<a href="profil.php?id='.$_SESSION['id'].'" > Mon profil </a>' ?></li>
 				<li><a class="page_utilisee" href="historique.php">Mon historique</a></li>
+		    	<li><a href="deconnexion.php">Déconnexion</a></li>
 		    </ul>
 		</nav>
 
@@ -58,56 +58,57 @@
 		        // Récupération des messages
 		        $sessid=$_SESSION['id']; // sert à query ci dessous mais aussi pour un query plus loin
 		        $reponse = $bdd->query('SELECT resultat, id, commentaire, sport, gain_potentiel, mise, DATE_FORMAT(date_ajout, "%d/%m/%Y") AS date_addi FROM historique WHERE pseudo='.$sessid.' ORDER BY ID DESC');
-		    ?>
-		        <table class="table-fill">
-		        <thead> <!-- En-tête du tableau -->
-		            <tr>
-		                <th>Date</th>
-		                <th>Sport</th>
-		                <th>Mise</th>
-		                <th>Gain potentiel</th>
-		                <th>Gagné ?</th>
-		             </tr>
-		        </thead>
-		        <tbody>
-		        	<tr>
-			        	<form action="historique.php" method="post">
-			       			<td><?php ?></td>
-					        <td><label for="sport"></label><input type="text" name="sport"/></td>
-					        <td><label for="mise"></label><input type="text" name="mise"/></td>	 
-					        <td><label for="gain_potentiel"></label><input type="text" name="gain_potentiel"/></td>
-					        <td><label for="gagné"></label>
-					        <select name="gagné">
-					           <option value="??">Je ne sais pas encore</option>
+		    ?>			        	
+		    			<form class="form_2_form" action="historique.php" method="post">
+		    			<div class="form_2_div_flex">
+              				<div class="form_2_div">
+				        		Date <br/>
+				        	<div class="date_couleur">
+				        		<?php
+									$date = date("d/m/Y");
+									Print("$date");
+								?>
+							</div>
+							</div>
+              				<div class="form_2_div">
+					        	Type <br/> <label class="form_2_label" for="sport"></label><input class="form_2_input" placeholder="Foot, Jeux à gratter, etc" type="text" name="sport" maxlength="15"/>
+					        </div>
+              				<div class="form_2_div">
+					        	Dépense <br/> <label class="form_2_label" for="mise"></label><input class="form_2_input" placeholder="Ex: 30€" type="text" name="mise" maxlength="10"/>
+					        </div>
+              				<div class="form_2_div">
+					        	Gain maximum <br/> <label class="form_2_label" for="gain_potentiel"></label><input class="form_2_input" placeholder="Ex: 55€" type="text" name="gain_potentiel" maxlength="10"/>
+					        </div>
+					    </div>    
+              				<div class="form_2_div">
+					        	Vos remarques <br/> <label class="form_2_label" for="commentaire"></label> 
+					        	<textarea  class="form_2_input" name="commentaire" id="ameliorer" rows="5" cols="100" placeholder=" Notez ici, par exemples : les équipes qui s'affrontent ; celle sur laquelle vous pariez ; pourquoi ? ; etc... " maxlength="400"></textarea> <br/> 
+					        </div>
+              				<div class="form_2_div">
+					        	Gagné ? <br/> <label class="form_2_label" for="gagné"></label>
+					        <select class="form_2_input" name="gagné">
 					           <option value="oui">oui</option>
+					           <option value="??">Je ne sais pas encore</option>
 					           <option value="non">non</option>
-					        </select>
-			 				</td>
-		             </tr>
-		             <tr>
-			             <td colspan="4"><label for="commentaire"></label> <input placeholder="Dis pourquoi tu as parié pour t'en souvenir et te perféctionner si tu le souhaite !" name="commentaire" size="150"  />
-			             </td >
-			        	<td><input type="submit" value="Envoyer"/></td>
-		             </tr>
+					        </select><br/>
+			        		<input type="submit" value="Enregistrer mon pari !" class="image_enregistrer_pari"/>
+			        		</div>
 		             	</form>
-
-		        </tbody>
-		        </table>
 		        <br/>
-		        <table class="table-fill">
+		        <table>
 		        <thead> <!-- En-tête du tableau -->
 		            <tr>
-		                <th class="text-left">Date</th>
-		                <th class="text-left">Sport</th>
-		                <th class="text-left">Mise</th>
-		                <th class="text-left">Gain potentiel</th>
-		                <th class="text-left">Commentaire</th>
-		                <th class="text-left">Gagné ?</th>
-		                <th class="text-left">Perte ou Gain </th>
+		                <th class="petit_case">Date</th>
+		                <th class="petit_case">Type</th>
+		                <th class="petit_case">Dépense</th>
+		                <th class="petit_case">Gain potentiel</th>
+		                <th>Vos remarques</th>
+		                <th class="petit_case">Gagné ?</th>
+		                <th class="petit_case">Resultats</th>
 		                <th></th>
 		             </tr>
 		        </thead>
-		        <tbody class="table-hover">
+		        <tbody>
 				<?php
 			        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
 			        while ($donnees = $reponse->fetch())
@@ -141,21 +142,45 @@
 			        	}
 			        	$insertgain_perte_chiffre = $bdd->prepare("UPDATE historique SET gain_perte_chiffre = ? WHERE id = ?");
 			        	$insertgain_perte_chiffre->execute(array($gain_perte_chiffre,$donnees['id']));
-			        	echo
-			        	'
-				        <tr>
-				         	<td>' .$donnees['date_addi']. '</td>
-				         	<td>' . htmlspecialchars($donnees['sport']) . '</td>
-				          	<td>' . htmlspecialchars($donnees['mise']) . '</td>
-				           	<td>' . htmlspecialchars($donnees['gain_potentiel']) . '</td>
-				           	<td>' . htmlspecialchars($donnees['commentaire']) . '</td>
-				           	<td>' . htmlspecialchars($donnees['resultat']) . '</td>
-				           	<td>' . $gain_perte . '</td>
-				           	<td> <a href="modif_pari.php?id='.$donnees['id'].'">Modifier</a> </td>
-			           	</tr>
-			          	</tbody>
-                        '
-			          	;
+			        	
+			        	if (strlen($donnees['commentaire'])>35) // Pour afficher les petit points après les commentaire si il y a plus de 35 caractères et donc que le texte est plus long que ce qui s'affiche dans la case du tableau
+			        	{
+				        	echo
+				        	'
+					        <tr>
+					         	<td class="petit_case">' . $donnees['date_addi']. '</td>
+					         	<td class="petit_case">' . htmlspecialchars($donnees['sport']) . '</td>
+					          	<td class="petit_case">' . htmlspecialchars($donnees['mise']) . '</td>
+					           	<td class="petit_case">' . htmlspecialchars($donnees['gain_potentiel']) . '</td>
+					           	<td>' .substr(htmlspecialchars($donnees['commentaire']), 0, 35). '...</td>
+					           	<td class="petit_case">' . htmlspecialchars($donnees['resultat']) . '</td>
+					           	<td class="petit_case">' . $gain_perte . '</td>
+					           	<td class="petit_case"> <a class="fond_image" href="modif_pari.php?id='.$donnees['id'].'"><img class="fond_image" src="image/loupe.jpeg" alt="loupe" width="15" height="15"/></a> </td>
+				           	</tr>
+				          	</tbody>
+	                        '
+				          	;
+			        	}
+			        	else
+			        	{
+			        		echo
+				        	'
+					        <tr>
+					         	<td class="petit_case">' . $donnees['date_addi']. '</td>
+					         	<td class="petit_case">' . htmlspecialchars($donnees['sport']) . '</td>
+					          	<td class="petit_case">' . htmlspecialchars($donnees['mise']) . '</td>
+					           	<td class="petit_case">' . htmlspecialchars($donnees['gain_potentiel']) . '</td>
+					           	<td>' . substr(htmlspecialchars($donnees['commentaire']), 0, 35). '</td>
+					           	<td class="petit_case">' . htmlspecialchars($donnees['resultat']) . '</td>
+					           	<td class="petit_case">' . $gain_perte . '</td>
+					           	<td class="petit_case"> <a class="fond_image" href="modif_pari.php?id='.$donnees['id'].'"><img class="fond_image" src="image/loupe.jpeg" alt="loupe" width="15" height="15"/></a> </td>
+				           	</tr>
+				          	</tbody>
+	                        '
+				          	;
+			        	}
+			        	
+			          
 			        }
 			        $reponse->closeCursor();
 				?>

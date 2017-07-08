@@ -23,7 +23,7 @@ if(isset($_POST['formconnexion'])) {
             $_SESSION['id'] = $userinfo ['id'];
             $_SESSION['pseudo'] = $userinfo ['pseudo'];
             $_SESSION['email'] = $userinfo ['email'];
-            header("Location: profil.php?id=".$_SESSION['id']);
+            header("Location: historique.php");
         } 
         else
         {
@@ -84,16 +84,17 @@ if(isset($_POST['formconnexion'])) {
 	?>
 
 	    <section>
-	        <form action="connexion.php" method="post">
-			    <p>
-			    <div>
-			    <label for="pseudo">Pseudo</label> <br /> <input type="text" name="pseudoconnect" /><br />
+	        <form action="connexion.php" method="post" class="form_1_form">
+			    <p class="form_1_p">
+			    <div class="form_1_div">
+			    <label class="form_1_label" for="pseudo">Pseudo</label
+			    > <br /> <input class="form_1_input" type="text" name="pseudoconnect" /><br />
 			    </div>
-			    <div>
-			    <label for="pass">Mot de passe</label> <br />  <input type="password" name="passconnect" /><br />
+			    <div class="form_1_div">
+			    <label class="form_1_label" for="pass">Mot de passe</label> <br />  <input class="form_1_input" type="password" name="passconnect" /><br />
 			    </div>
 
-			    <div>
+			    <div class="form_1_div">
 			    <input class="image_inscription_connexion" type="submit" value="Connexion" name="formconnexion"/>
 			    </div>
 			    <br />
