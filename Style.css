@@ -69,15 +69,9 @@ td
   background: none;
   border: none;
 }
-
-.image_poubelle
+.table_form_modif
 {
-
-}
-
-.bouton_recommencer
-{
-  background: image/recommencer.jpeg;
+  max-width: 700px;
 }
 /* L'EN TÊTE*/
 header

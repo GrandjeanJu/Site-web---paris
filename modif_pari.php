@@ -27,20 +27,12 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
 	    $insertmise->execute(array($newmise, $getid));
 	    header('location: historique.php');
 	}
-	if(isset($_POST['newcôte_W']) AND !empty($_POST['newcôte_W']) AND isset($_GET['id']) AND $_GET['id'] > 0)
+	if(isset($_POST['gain_potentiel']) AND !empty($_POST['gain_potentiel']) AND isset($_GET['id']) AND $_GET['id'] > 0)
 	{
 		$getid = $_GET['id']; // ici on reprend l'id du pari transmit pas l'action de form juste en bas, ainsi on peu identifier et le modifier le bon paris.
-		$newcôte_W = htmlspecialchars($_POST['newcôte_W']);
-	    $insertcôte_W = $bdd->prepare("UPDATE historique SET côte_W = ? WHERE id = ?");
-	    $insertcôte_W->execute(array($newcôte_W, $getid));
-	    header('location: historique.php');
-	}
-	if(isset($_POST['newcôte_L']) AND !empty($_POST['newcôte_L']) AND isset($_GET['id']) AND $_GET['id'] > 0)
-	{
-		$getid = $_GET['id']; // ici on reprend l'id du pari transmit pas l'action de form juste en bas, ainsi on peu identifier et le modifier le bon paris.
-		$newcôte_L = htmlspecialchars($_POST['newcôte_L']);
-	    $insertcôte_L = $bdd->prepare("UPDATE historique SET côte_L = ? WHERE id = ?");
-	    $insertcôte_L->execute(array($newcôte_L, $getid));
+		$newgain_potentiel = htmlspecialchars($_POST['gain_potentiel']);
+	    $insertgain_potentiel = $bdd->prepare("UPDATE historique SET gain_potentiel = ? WHERE id = ?");
+	    $insertgain_potentiel->execute(array($newgain_potentiel, $getid));
 	    header('location: historique.php');
 	}
 	if(isset($_POST['newcommentaire']) AND !empty($_POST['newcommentaire']) AND isset($_GET['id']) AND $_GET['id'] > 0)
@@ -66,6 +58,11 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
         $insertsupprimer->execute(array($getid));
         header('location: historique.php');
     }
+
+    //recupération des message pour les afficher en "value" dans les input
+    $sessid=$_SESSION['id']; // sert à query ci dessous mais aussi pour un query plus loin
+                $reponse = $bdd->query('SELECT resultat, commentaire, sport, gain_potentiel, mise FROM historique WHERE id='.$_GET['id'].'');
+                $donnees = $reponse->fetch()
 ?>
 <html>
     <head>
@@ -85,54 +82,57 @@ if(isset($_SESSION['id'])) // c'est juste pour voir si la personne est connecté
 		        <a href="historique.php">Retour à l'historique</a>
 		    </ul>
 		</nav>
-		    <table class="table-fill">
+		<table class="table_form_modif">
         <thead> <!-- En-tête du tableau -->
             <tr>
-                <th>Sport</th>
-                <th>Mise</th>
-                <th>Côte W</th>
-                <th>Côte L</th>
-                <th>Commentaire</th>
+                <th>Type</th>
+                <th>Dépense</th>
+                <th>Gain potentiel</th>
                 <th>Gagné ?</th>
             </tr>
         </thead>
-        <tbody class="table-hover"> 
+        <tbody> 
         <tr>
-        	<form method="POST" action="modif_pari.php?id=<?php echo $_GET['id']/*ici on reprend l'id du pari (transmit par l'URL grâce à GET) pour l'envoyer juste au dessus pour la modification du bon pari  (la transmission initiale c'est faite par le script historique)*/ ?>"> 
+        	<form method="POST" action="modif_pari.php?id=<?php echo $_GET['id']/*ici on reprend l'id du pari (transmit par l'URL grâce à GET) pour l'envoyer juste au dessus pour la modification du bon pari  (la transmission initiale c'est faite par le script historique)*/ ?>">
                 <td>
-                <label></label>
-                <input type="text" name="newsport" placeholder="sport">
+                <input class="form_2_input" type="text" name="newsport" placeholder="Type" value="<?php echo $donnees['sport'];?>">
                 </td>
                 <td>
-                <label></label>
-                <input type="text" name="newmise" placeholder="mise">
+                <input class="form_2_input" type="text" name="newmise" placeholder="Dépense" value="<?php echo $donnees['mise'];?>">
                 </td>
                 <td>
-                <label></label>
-                <input type="text" name="newcôte_W" placeholder="Côte du prétendu gagnant">
+                <input class="form_2_input" type="text" name="gain_potentiel" placeholder="Gain potentiel" value="<?php echo $donnees['gain_potentiel'];?>">
                 </td>
                 <td>
-                <label></label>
-                <input type="text" name="newcôte_L" placeholder="Côte du prétendu perdant">
-                </td>
-               	<td>
-               	<label></label>
-                <input type="text" name="newcommentaire" placeholder="Décris ta stratégie oula raison de ton pari !">
-                </td>
-                <td>
-                <label for="resultat"></label>
-		        <select name="newresultat">
-		           <option value="??">Je ne sais pas encore !</option>
+                <label for="resultat" ></label>
+		        <select class="form_2_input" name="newresultat" >
 		           <option value="oui">oui</option>
 		           <option value="non">non</option>
+                   <option value="??">Je ne sais pas encore !</option>
 		        </select>
 		        </td>
-                <input type="image" src="image/recommencer.jpeg" width="30" height="30">
-                <input type="image" src="image/poubelle.jpeg" width="30" height="30" name="supprimer" value="supprimer">
-            </form>
         </tr> 
         </tbody>
         </table>
+
+        <table class="table_form_modif">
+        <thead>
+        <tr>
+                <th>Vos remarques</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+                <td>
+                <textarea  class="form_2_input" name="newcommentaire" rows="5" cols="100" placeholder=" Notez ici, par exemples : les équipes qui s'affrontent ; celle sur laquelle vous pariez ; pourquoi ? ; etc... " maxlength="400"><?php echo $donnees['commentaire'];?></textarea>
+                </td>
+        </tr>
+        </tbody>
+        </table>
+                <input type="submit" class="image_enregistrer_pari" value="Enregistrer mes modifications">
+                <input type="image" src="image/poubelle.jpeg" width="30" height="30" name="supprimer" value="supprimer">
+
+            </form>
     </body>
 </html>
 <?php
